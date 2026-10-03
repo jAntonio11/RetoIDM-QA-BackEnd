@@ -1,0 +1,31 @@
+name: Pruebas API ServeRest
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el proyecto
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Ejecutar pruebas
+        run: mvn -B clean test
+
+      - name: Publicar reporte de Karate
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-karate
+          path: target/karate-reports

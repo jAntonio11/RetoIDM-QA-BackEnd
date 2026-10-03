@@ -1,0 +1,6 @@
+target/
+.idea/
+*.iml
+.antigravity/
+*.log
+.DS_Store
